@@ -1,0 +1,29 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.31
+    container_name: mysqllocal
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQLROOTPWD}
+      MYSQL_DATABASE: openaudata
+    ports:
+      - "3306:3306"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadminopen
+    restart: always
+    ports:
+      - 8465:80
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=1000M
+      - MAX_UPLOAD_LIMIT=1000M
+      - MEMORY_LIMIT=512M
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
