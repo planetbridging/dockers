@@ -9,6 +9,8 @@ services:
       MYSQL_DATABASE: openaudata
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql # Mount the volume for MySQL data
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -22,8 +24,11 @@ services:
       - db
     environment:
       - PMA_ARBITRARY=1
-      - UPLOAD_LIMIT=1000M
-      - MAX_UPLOAD_LIMIT=1000M
-      - MEMORY_LIMIT=512M
+      - UPLOAD_LIMIT=10000M
+      - MAX_UPLOAD_LIMIT=10000M
+      - MEMORY_LIMIT=5120M
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+volumes:
+  mysql_data: # Define the volume here
