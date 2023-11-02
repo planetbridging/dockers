@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     image: mysql:8.0.31
-    container_name: mysqllocal
+    container_name: mysqllocal_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQLROOTPWD}
@@ -14,10 +14,10 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadminopen
+    container_name: phpmyadmin_db
     restart: always
     ports:
-      - 8465:80
+      - 6123:80
     depends_on:
       - db
     environment:
