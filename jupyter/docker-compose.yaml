@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  tf-notebook:
+    image: tensorflow/tensorflow:latest-jupyter
+    # Use an older tag if you need an older version of TensorFlow
+    ports:
+      - "8888:8888" # Expose Jupyter notebook server on localhost:8888
+    volumes:
+      - ./notebooks:/tf/notebooks # Assumes a directory `./notebooks` on the host
+    environment:
+      - JUPYTER_ENABLE_LAB=yes # Optional: Starts JupyterLab if you prefer over classic Jupyter
+    command:
+      - jupyter
+      - notebook
+      --NotebookApp.notebook_dir=/tf/notebooks
+      --ip=0.0.0.0
+      --no-browser
+      --allow-root
