@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Isomorphic JavaScript Example</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script src="/clientCode.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch the JavaScript code from the server
+        fetch("/clientCode.js")
+          .then((response) => response.text())
+          .then((text) => {
+            // Evaluate the fetched code as JavaScript
+            eval(text);
+            const generator = new ContentGenerator(
+              "Hello from the client-side!"
+            );
+            document.getElementById("content").innerHTML = generator.generate();
+          });
+      });
+    </script>
+  </body>
+</html>
