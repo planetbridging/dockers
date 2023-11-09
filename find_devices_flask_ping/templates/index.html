@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Device Pinger</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            socket.emit('start_ping', {});
+        });
+
+        socket.on('ping_response', function(msg) {
+            console.log(msg);
+            var statusColor = msg.status === 'success' ? 'green' : 'red';
+            var deviceElement = document.getElementById(msg.device);
+            if (!deviceElement) {
+                var deviceList = document.getElementById('device-list');
+                deviceElement = document.createElement('div');
+                deviceElement.id = msg.device;
+                deviceList.appendChild(deviceElement);
+            }
+            deviceElement.textContent = msg.device;
+            deviceElement.style.color = statusColor;
+        });
+    </script>
+</head>
+<body>
+    <h1>Device Status</h1>
+    <div id="device-list"></div>
+</body>
+</html>
