@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>React CDN Example with JSX</title>
+  <!-- Load React and ReactDOM from a CDN -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <!-- Load Babel for in-browser JSX and ES6+ transformation -->
+  <script src="https://unpkg.com/@babel/standalone@7.12.9/babel.min.js"></script>
+</head>
+<body>
+  <div id="reactDiv"></div>
+  <script type="text/babel">
+    // Use React and ReactDOM here with JSX
+    class MyComponent extends React.Component {
+
+      generateStuff1(){
+        var lst = [];
+        for(var i = 0; i<= 5;i++){
+          lst.push(<li key={i}>{i}</li>);
+        }
+
+        return <ul>{lst}</ul>
+      }
+
+      render() {
+        return <div>
+          <h1>hello</h1>
+          {this.generateStuff1()}
+        </div>;
+      }
+    }
+
+    ReactDOM.render(<MyComponent />, document.getElementById('reactDiv'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>React CDN Example with Routing</title>
+  <!-- Load React and ReactDOM from a CDN -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <!-- Load React Router v5 from a CDN -->
+  <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js"></script>
+  <!-- Load Babel for in-browser JSX and ES6+ transformation -->
+  <script src="https://unpkg.com/@babel/standalone@7.12.9/babel.min.js"></script>
+</head>
+<body>
+  <div id="reactDiv"></div>
+  <script type="text/babel">
+    const { BrowserRouter, Route, Link, Switch } = ReactRouterDOM;
+
+    function App() {
+      return (
+        <BrowserRouter>
+          <div>
+            <nav>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/list">List</Link></li>
+              </ul>
+            </nav>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/list" component={List} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      );
+    }
+
+    function Home() {
+      return <h1>Home Page</h1>;
+    }
+
+    function List() {
+      function generateStuff1() {
+        return (
+          <ul>
+            {Array.from({ length: 6 }, (_, i) => <li key={i}>{i}</li>)}
+          </ul>
+        );
+      }
+
+      return (
+        <div>
+          <h1>List Page</h1>
+          {generateStuff1()}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('reactDiv'));
+  </script>
+</body>
+</html>
