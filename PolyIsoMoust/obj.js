@@ -136,7 +136,7 @@ export class obj {
     return map;
   }
 
-  //----------mis----------
+  //----------miscellaneous----------
 
   detectEnvironment() {
     if (typeof window === "object" && typeof window.document === "object") {

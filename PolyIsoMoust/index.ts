@@ -1,7 +1,9 @@
+const express = require("express");
+const mime = require("mime");
+
 import { obj } from "./obj";
 import { oExample } from "./oExample";
 
-const express = require("express");
 const app = express();
 
 app.use(express.static("public"));
@@ -14,29 +16,35 @@ var port = 3000;
 })();
 
 function loadRoutes() {
-  // Endpoint to send the ContentGenerator code as a string
-  app.get("/obj.js", (req, res) => {
-    const codeString = obj.toString();
-    res.setHeader("Content-Type", "application/javascript");
-    res.send(codeString);
-  });
+  var mapClasses = new Map();
+
+  mapClasses.set("obj.js", obj.toString());
 
   app.get("*", (req, res) => {
-    //res.send(codeString);
-
-    var p = req.path;
-    var pageFound = false;
-
-    if (p == "/") {
-      var tempoExample = new oExample();
-      res.send(tempoExample.createPage());
-    }
-
     try {
-      if (!pageFound) {
-        res.status(404).send("404 - Not Found");
+      //res.send(codeString);
+
+      var p = req.path;
+
+      if (p == "/") {
+        var tempoExample = new oExample();
+        res.send(tempoExample.createPage());
         return;
       }
+
+      var pathFile = req.path.substring(1);
+      const mimeType = mime.getType(pathFile);
+
+      if (mapClasses.has(pathFile)) {
+        if (mimeType) {
+          res.setHeader("Content-Type", mimeType);
+        }
+
+        res.send(mapClasses.get(pathFile));
+        return;
+      }
+
+      res.status(404).send("404 - Not Found");
     } catch (ex) {
       console.log(ex);
       res.status(404).send("404 - Not Found");
