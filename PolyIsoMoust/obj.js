@@ -26,6 +26,19 @@ export class obj {
     });
   }
 
+  renderContent(content) {
+    const contentHtml = content.join("");
+    const template = `
+        <div>
+        {{{contentHtml}}}
+        </div>
+    `;
+
+    return mustache.render(template, {
+      contentHtml: contentHtml,
+    });
+  }
+
   //----------page items-----------
   mListTemplate = `
   <ul class="{{ulClass}}">

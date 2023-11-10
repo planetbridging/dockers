@@ -7,12 +7,18 @@ export class oExample extends obj {
   createPage() {
     var renderType = this.detectEnvironment();
     var htmlList = this.eList(renderType);
+    var pContent = [`<h1>hello</h1>`, `<p>yay</p>`, htmlList];
 
     const data = {
       pageTitle: "Example home page",
       head: [this.moustImport, this.axiosImport],
-      content: [`<h1>hello</h1>`, `<p>yay</p>`, htmlList],
+      content: pContent,
     };
+
+    if (renderType == "Browser") {
+      return this.renderContent(pContent);
+    }
+
     return this.renderPage(data);
   }
 

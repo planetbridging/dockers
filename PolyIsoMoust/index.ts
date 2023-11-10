@@ -19,6 +19,7 @@ function loadRoutes() {
   var mapClasses = new Map();
 
   mapClasses.set("obj.js", obj.toString());
+  mapClasses.set("oExample.js", oExample.toString());
 
   app.get("*", (req, res) => {
     try {
