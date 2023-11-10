@@ -2,40 +2,48 @@ const mustache = require("mustache");
 
 export class obj {
   renderPage(data) {
+    // Convert head and content arrays to strings
+    const headHtml = data.head.join("");
+    const contentHtml = data.content.join("");
+
     const template = `
         <!DOCTYPE html>
         <html>
         <head>
             <title>{{pageTitle}}</title>
-            {{{head}}}
+            {{{headHtml}}}
         </head>
         <body>
-            {{{content}}}
+            {{{contentHtml}}}
         </body>
         </html>
     `;
 
-    return mustache.render(template, data);
+    return mustache.render(template, {
+      pageTitle: data.pageTitle,
+      headHtml: headHtml,
+      contentHtml: contentHtml,
+    });
   }
 
   //----------page items-----------
   mListTemplate = `
-      <ul {{#ulClass}}class="{{ulClass}}"{{/ulClass}}>
-        {{#list}}
-          <li {{#className}}class="{{className}}"{{/className}}>{{.}}</li>
-        {{/list}}
-      </ul>
+  <ul class="{{ulClass}}">
+  {{#list}}
+  <li class="{{className}}">{{text}}</li>
+  {{/list}}
+</ul>
       `;
 
   generateList(items, ulClass = "", liClass = "") {
     const data = {
       list: items.map((item) => ({
-        ".": item,
+        text: item, // Assuming 'item' is a string
         className: liClass,
       })),
       ulClass: ulClass,
     };
-    return Mustache.render(this.mListTemplate, data);
+    return mustache.render(this.mListTemplate, data);
   }
 
   //----------Data processing-----------
@@ -126,5 +134,15 @@ export class obj {
     }
 
     return map;
+  }
+
+  //----------mis----------
+
+  detectEnvironment() {
+    if (typeof window === "object" && typeof window.document === "object") {
+      return "Browser";
+    } else {
+      return "Server";
+    }
   }
 }
