@@ -1,0 +1,15 @@
+{
+  "name": "polymorphic_isomorphic_moustache_templating",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mustache": "^4.2.0"
+  }
+}
