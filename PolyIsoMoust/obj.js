@@ -1,4 +1,4 @@
-const mustache = require("mustache");
+const Mustache = require("mustache");
 
 export class obj {
   renderPage(data) {
@@ -19,7 +19,7 @@ export class obj {
         </html>
     `;
 
-    return mustache.render(template, {
+    return Mustache.render(template, {
       pageTitle: data.pageTitle,
       headHtml: headHtml,
       contentHtml: contentHtml,
@@ -34,7 +34,7 @@ export class obj {
         </div>
     `;
 
-    return mustache.render(template, {
+    return Mustache.render(template, {
       contentHtml: contentHtml,
     });
   }
@@ -56,7 +56,7 @@ export class obj {
       })),
       ulClass: ulClass,
     };
-    return mustache.render(this.mListTemplate, data);
+    return Mustache.render(this.mListTemplate, data);
   }
 
   //----------Data processing-----------
