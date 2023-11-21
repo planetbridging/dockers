@@ -29,9 +29,9 @@ EXPOSE 8093
 
 COPY ./app.py ./home/coder/project/app.py
 
-RUN python3 /home/coder/project/app.py
+#RUN python3 /home/coder/project/app.py
 
 
 
 # Start an interactive shell when the container starts
-CMD . /opt/venv/bin/activate && bash -i
+CMD ["bash", "-i"]
