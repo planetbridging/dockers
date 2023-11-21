@@ -1,0 +1,52 @@
+version: '3.3'
+
+services:
+  myshell:
+    build:
+      context: .
+    volumes:
+      - shared_data:/home/coder/project
+    tty: true
+
+  code-server:
+    image: codercom/code-server:latest
+    container_name: code-server-flask
+    user: root
+    environment:
+      - PASSWORD=${CODESERVER} # Replace with your password
+    volumes:
+      - shared_data:/home/coder/project
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  db:
+    image: mysql:latest
+    container_name: mysql_flask
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQLROOTPWD}  # Replace with your desired root password
+      - MYSQL_DATABASE=example_db          # Replace with your database name
+      - MYSQL_USER=example_user            # Replace with your database user
+      - MYSQL_PASSWORD=${MYSQLUSERPWD}    # Replace with your database user password
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_flask
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=example_user              # Replace with your database user
+      - PMA_PASSWORD=${MYSQLUSERPWD}       # Replace with your database user password
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    depends_on:
+      - db
+
+volumes:
+  shared_data:
+  db_data:  # This will hold the persistent data for MySQL
