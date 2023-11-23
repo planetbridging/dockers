@@ -2,6 +2,7 @@ const express = require('express');
 
 const oMysql = require("./objMysql");
 
+const dbloc = process.env.DBLOCATION;
 const db = process.env.DBNAME;
 const un = process.env.DBUSER;
 const pw = process.env.DBPWD;
@@ -21,7 +22,7 @@ const port = process.env.PORT;
   })();
 
   async function remoteDBTesting() {
-    var oSql = new oMysql.objSql("", un, pw, false);
+    var oSql = new oMysql.objSql(dbloc, un, pw, false);
     //MYSQL_CLIENT_SSL
     var lstDb = await oSql.getLstDb();
     console.log(lstDb);
@@ -32,7 +33,7 @@ const port = process.env.PORT;
 
   async function startup(){
 
-    var oSql = new oMysql.objSql("", un, pw, false);
+    var oSql = new oMysql.objSql(dbloc, un, pw, false);
 
     const app = express();
 

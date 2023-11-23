@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { DataSet, Network } from "vis-network/standalone/esm/vis-network";
+import axios from 'axios';
 
 import { lst } from "./api";
 
@@ -11,10 +12,25 @@ class Graph extends Component {
   }
 
   componentDidMount() {
-    this.initializeGraph(lst);
+    //this.initializeGraph(lst);
+    this.initializeGraph(null);
   }
 
-  initializeGraph = (data) => {
+  initializeGraph = async (data) => {
+
+
+    if(data == null){
+        try {
+            
+            const response = await axios.get('/api');
+            console.log(response.data);
+            data = response.data;
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            return;
+          }
+    }
+
     // Create an array of nodes with the unique table names and tooltips
     const nodes = new DataSet(
       [...new Set(data.map((item) => item.TABLE_NAME))].map((tableName) => ({
