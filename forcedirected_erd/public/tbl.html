@@ -273,6 +273,25 @@
         });
     });
 
+    function addRowToTable(data) {
+    var table = document.getElementById("myTable");
+    var newRow = table.insertRow(-1); // Inserts a new row at the end of the table
+
+    // Loop through each data item and create a new cell
+    data.forEach(function(item) {
+        var newCell = newRow.insertCell(-1); // Inserts a cell in the new row
+        newCell.innerHTML = item; // Add the data to the cell
+    });
+}
+
+// Example usage
+addRowToTable(["Data 1", "Data 2", "Data 3"]);
+addRowToTable(["Data 1", "Data 2", "Data 4"]);
+addRowToTable(["Data 1", "Data 2", "Data 5"]);
+addRowToTable(["Data 1", "Data 2", "Data 5"]);
+addRowToTable(["Data 1", "Data 2", "Data 3"]);
+
+
     const tableRows = document.querySelectorAll("#myTable tbody tr");
     const headers = document.querySelectorAll("#myTable thead th");
 
