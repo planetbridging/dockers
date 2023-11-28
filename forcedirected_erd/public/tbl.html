@@ -295,6 +295,38 @@ addRowToTable(["Data 1", "Data 2", "Data 3"]);
     const tableRows = document.querySelectorAll("#myTable tbody tr");
     const headers = document.querySelectorAll("#myTable thead th");
 
+    const headerRow = myTable.querySelector("thead tr");
+    const totalColumns = headerRow.querySelectorAll("th").length;
+
+    // Create a new row for the search input
+    const searchRow = myTable.createTHead().insertRow(0);
+
+    // Create a cell that spans all columns
+    const searchCell = searchRow.insertCell(0);
+    searchCell.colSpan = totalColumns;
+
+    // Create the search input
+    const searchInput = document.createElement("input");
+    searchInput.type = "text";
+    searchInput.placeholder = "Search...";
+    searchInput.className = "ui input fluid";
+    searchInput.id = "searchInput" + Math.random().toString(36).substr(2, 9); // Random ID
+
+
+    // Create a div container for the search input
+    const searchDiv = document.createElement("div");
+    searchDiv.className = "ui fluid icon input";
+    searchDiv.appendChild(searchInput);
+
+    // Append the search input to the cell
+    searchCell.appendChild(searchDiv);
+
+            
+   
+
+    // Attach event listener to the search input
+    searchInput.addEventListener('input', filterTableRows);
+
     var tblMap = new Map();
 
     // Gather unique values from each column
@@ -328,7 +360,7 @@ addRowToTable(["Data 1", "Data 2", "Data 3"]);
         });
     });
 
-    function filterTableRows(columnIndex, filterValue) {
+    function oldfilterTableRows(columnIndex, filterValue) {
         tableRows.forEach(row => {
             const cell = row.querySelectorAll("td")[columnIndex];
             if (cell.textContent.trim() === filterValue || filterValue === "") {
@@ -338,6 +370,17 @@ addRowToTable(["Data 1", "Data 2", "Data 3"]);
             }
         });
     }
+
+     // Function to filter table rows based on search input
+     function filterTableRows() {
+            const searchText = searchInput.value.toLowerCase();
+            const tableRows = document.querySelectorAll("#myTable tbody tr");
+
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(searchText) ? "" : "none";
+            });
+        }
 });
 
     </script>
