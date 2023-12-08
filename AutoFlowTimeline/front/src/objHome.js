@@ -65,27 +65,26 @@ function Cube(props) {
   );
 }
 
-function FBXModel({ path, scale }) {
+function FBXModel({ path, scale, position }) {
   const fbx = useLoader(FBXLoader, path);
-  return <primitive object={fbx} scale={scale} />;
+  return <primitive object={fbx} scale={scale} position={position} />;
 }
 
-function FBXModelWithTexture({ path, scale, texturePath }) {
+function FBXModelWithTexture({ path, scale, texturePath, position }) {
   const fbx = useLoader(FBXLoader, path);
-  const texture = useTexture(texturePath); // Load the texture
+  const texture = useTexture(texturePath);
 
   fbx.traverse((child) => {
     if (child.isMesh) {
-      // Assuming your road mesh can be identified either by name or other property
       if (child.name === "RoadMeshName") {
-        // Replace 'RoadMeshName' with the actual identifier
+        // Replace with your mesh name
         child.material.map = texture;
         child.material.needsUpdate = true;
       }
     }
   });
 
-  return <primitive object={fbx} scale={scale} />;
+  return <primitive object={fbx} scale={scale} position={position} />;
 }
 
 function Loader() {
@@ -119,6 +118,23 @@ function CameraController({ position }) {
 }
 
 const LoadingContext = React.createContext({ setLoading: () => {} });
+
+function TexturedCube({
+  position,
+  rotation = [0, 0, 0],
+  texturePath,
+  size = [1, 0.1, 1]
+}) {
+  const [ref] = useBox(() => ({ position, rotation, args: size }));
+  const texture = useTexture(texturePath);
+
+  return (
+    <mesh ref={ref} rotation={rotation}>
+      <boxGeometry args={size} />
+      <meshStandardMaterial map={texture} />
+    </mesh>
+  );
+}
 
 // Main class component
 class OHome extends Component {
@@ -303,12 +319,22 @@ class OHome extends Component {
                   path="/models/rp_nathan_animated_003_walking.fbx"
                 />
 
-                <FBXModel scale={0.1} path="/models/HondaExport.fbx" />
-                <FBXModel scale={0.1} path="/models/HondaExport.fbx" />
-                <FBXModelWithTexture
-                  scale={10}
-                  path="/models/road.fbx"
+                <FBXModel
+                  scale={0.1}
+                  path="/models/HondaExport.fbx"
+                  position={[0, 0, 0]}
+                />
+                <FBXModel
+                  scale={0.1}
+                  path="/models/HondaExport.fbx"
+                  position={[0, 0, 0]}
+                />
+
+                <TexturedCube
+                  position={[1, 1, 1]}
                   texturePath="/textures/road.jpg"
+                  size={[100, 100, 5]}
+                  rotation={[300, 0, 0]}
                 />
               </Physics>
             </Canvas>
