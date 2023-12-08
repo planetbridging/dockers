@@ -43,6 +43,10 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
+import io from "socket.io-client";
+
+import { encrypt, decrypt } from "./crypto";
+
 // Plane functional component
 function Plane(props) {
   const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }));
@@ -136,6 +140,18 @@ function TexturedCube({
   );
 }
 
+var testing = false;
+var chatSocket = null;
+var publicSecretKey = "zoomzoom";
+
+if (testing) {
+  var ioLocation = "http://localhost:9444";
+  chatSocket = io.connect(ioLocation);
+} else {
+  //ioLocation = "https://tdtplanner.com:5500";
+  chatSocket = io.connect();
+}
+
 // Main class component
 class OHome extends Component {
   constructor(props) {
@@ -155,6 +171,7 @@ class OHome extends Component {
   componentDidMount() {
     this.timeout = setTimeout(() => this.setState({ ready: true }), 1000);
     document.addEventListener("keydown", this.handleKeyDown);
+    this.loadSocket();
   }
 
   componentWillUnmount() {
@@ -164,6 +181,16 @@ class OHome extends Component {
 
   setLoading(loading) {
     this.setState({ loading });
+  }
+
+  async loadSocket() {
+    chatSocket.on("gameTick", (data) => {
+      console.log(data);
+      var de = decrypt(publicSecretKey, data);
+      var j = JSON.parse(de);
+      console.log(j);
+      //var data = j["lstData"];
+    });
   }
 
   // Function to switch camera view
@@ -334,7 +361,7 @@ class OHome extends Component {
                   position={[1, 1, 1]}
                   texturePath="/textures/road.jpg"
                   size={[100, 100, 5]}
-                  rotation={[300, 0, 0]}
+                  rotation={[300.01, 0, 0]}
                 />
               </Physics>
             </Canvas>
