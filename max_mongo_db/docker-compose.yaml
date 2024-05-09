@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mongodb:
+    image: mongo:6.2
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    command: >
+      --maxIncomingConnections=20000
+      --maxPoolSize=5000
+      --maxDocumentSizeBytes=10485760000
+      --wiredTigerCacheSizeGB=16
+      --journalCommitInterval=1000
+      --syncPeriodSecs=60
+      --compress=zlib
+      --wiredTigerEngineConfigString="cache_size=16777216000"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
