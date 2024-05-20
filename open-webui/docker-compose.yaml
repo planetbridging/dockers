@@ -1,0 +1,11 @@
+services:
+  open-webui:
+    build: .
+    restart: always
+    network_mode: host
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://localhost:11434
+volumes:
+  open-webui:
