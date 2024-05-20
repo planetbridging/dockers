@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  jupyter:
+    build: .  # Build from the Dockerfile in the current directory
+    ports:
+      - "8887:8888"
+    volumes:
+      - ./notebooks:/notebooks
+    environment:
+      - JUPYTER_TOKEN=LazyLoading8123!
+    command: jupyter notebook --ip 0.0.0.0 --NotebookApp.token=LazyLoading8123! --notebook-dir=/notebooks --allow-root
+    runtime: nvidia
+
+  tensorboard:
+    image: tensorflow/tensorflow:latest-gpu
+    command: ["tensorboard", "--logdir", "/logs", "--host", "0.0.0.0"]
+    ports:
+      - "6005:6005"
+    volumes:
+      - ./logs:/logs
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
