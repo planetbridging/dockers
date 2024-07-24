@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/notebooks
+    environment:
+      - JUPYTER_TOKEN=LazyLoading8123!
+    command: jupyter notebook --ip 0.0.0.0 --NotebookApp.token=LazyLoading8123! --notebook-dir=/notebooks --allow-root
+
+  tensorboard:
+    image: tensorflow/tensorflow:latest
+    command: ["tensorboard", "--logdir", "/logs", "--host", "0.0.0.0"]
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./logs:/logs
