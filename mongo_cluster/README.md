@@ -1,3 +1,8 @@
+.env
+MONGO_INITDB_ROOT_USERNAME=yourusername
+MONGO_INITDB_ROOT_PASSWORD=yourpassword
+
+
 docker-compose up -d --build
 
 
