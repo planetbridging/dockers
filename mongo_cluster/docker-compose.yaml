@@ -2,13 +2,13 @@ version: "3.8"
 
 services:
   mongo1:
-    image: mongo:latest
+    build: ./mongo
     hostname: mongo1
     container_name: mongo1
+    command: mongod --replSet rs0 --bind_ip_all --keyFile /etc/mongo-keyfile --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_REPLICA_SET=rs0
     volumes:
       - mongo1_data:/data/db
     networks:
@@ -17,26 +17,26 @@ services:
       - 27017:27017
 
   mongo2:
-    image: mongo:latest
+    build: ./mongo
     hostname: mongo2
     container_name: mongo2
+    command: mongod --replSet rs0 --bind_ip_all --keyFile /etc/mongo-keyfile --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_REPLICA_SET=rs0
     volumes:
       - mongo2_data:/data/db
     networks:
       - mongo_cluster
 
   mongo3:
-    image: mongo:latest
+    build: ./mongo
     hostname: mongo3
     container_name: mongo3
+    command: mongod --replSet rs0 --bind_ip_all --keyFile /etc/mongo-keyfile --auth
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_REPLICA_SET=rs0
     volumes:
       - mongo3_data:/data/db
     networks:

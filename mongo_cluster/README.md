@@ -1,10 +1,7 @@
-```
-Initialize the Replica Set
-```
+docker-compose up -d --build
 
-Initialize the replica set
-```
-docker exec -it mongo1 mongo -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_ROOT_PASSWORD} --eval 'rs.initiate({
+
+docker exec -it mongo1 mongosh -u your_mongo_root_username -p your_mongo_root_password --authenticationDatabase admin --eval 'rs.initiate({
   _id: "rs0",
   members: [
     { _id: 0, host: "mongo1:27017" },
@@ -13,4 +10,5 @@ docker exec -it mongo1 mongo -u ${MONGO_INITDB_ROOT_USERNAME} -p ${MONGO_INITDB_
   ]
 })'
 
-```
+
+docker exec -it mongo1 mongosh -u your_mongo_root_username -p your_mongo_root_password --authenticationDatabase admin --eval 'rs.status()'
