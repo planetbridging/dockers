@@ -1,0 +1,29 @@
+version: "3.1"
+
+services:
+  parse-server:
+    image: parseplatform/parse-server:latest
+    container_name: parse-server
+    environment:
+      - PARSE_SERVER_APPLICATION_ID=${PARSE_SERVER_APPLICATION_ID}
+      - PARSE_SERVER_MASTER_KEY=${PARSE_SERVER_MASTER_KEY}
+      - PARSE_SERVER_DATABASE_URI=${PARSE_SERVER_DATABASE_URI}
+      - PARSE_SERVER_CLOUD_CODE_MAIN=${PARSE_SERVER_CLOUD_CODE_MAIN}
+    volumes:
+      - ./parse-server/cloud:/parse-server/cloud
+    ports:
+      - 1337:1337
+    restart: unless-stopped
+
+  parse-dashboard:
+    image: parseplatform/parse-dashboard:latest
+    container_name: parse-dashboard
+    environment:
+      - PARSE_DASHBOARD_APPLICATION_ID=${PARSE_SERVER_APPLICATION_ID}
+      - PARSE_DASHBOARD_MASTER_KEY=${PARSE_SERVER_MASTER_KEY}
+      - PARSE_DASHBOARD_SERVER_URL=http://parse-server:1337/parse
+      - PARSE_DASHBOARD_USER_ID=${PARSE_DASHBOARD_USER_ID}
+      - PARSE_DASHBOARD_USER_PASSWORD=${PARSE_DASHBOARD_USER_PASSWORD}
+    ports:
+      - 4040:4040
+    restart: unless-stopped

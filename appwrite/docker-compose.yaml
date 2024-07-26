@@ -1,34 +1,27 @@
-version: "3.8"
+version: "3.1"
 
 services:
-  mongo:
-    image: mongo:latest
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-    volumes:
-      - mongo_data:/data/db
-    restart: always
-
   appwrite:
     image: appwrite/appwrite:latest
-    depends_on:
-      - mongo
-    environment:
-      - _APP_DB_HOST=${MONGO_HOST}
-      - _APP_DB_PORT=27017
-      - _APP_DB_USER=${MONGO_INITDB_ROOT_USERNAME}
-      - _APP_DB_PASS=${MONGO_INITDB_ROOT_PASSWORD}
-      - _APP_DB_SCHEMA=${MONGO_DB}
-      - _APP_DB_CLUSTER=enabled
-      - _APP_ENV=production
+    container_name: appwrite
     ports:
       - 80:80
       - 443:443
+    environment:
+      _APP_ENV: development
+      _APP_DOMAIN: localhost
+      _APP_DOMAIN_TARGET: localhost
+      _APP_STORAGE_LIMIT: 1000000
+      _APP_FUNCTIONS_TIMEOUT: 900
+      _APP_DB_HOST: ${MONGO_HOST}
+      _APP_DB_USER: ${MONGO_INITDB_ROOT_USERNAME}
+      _APP_DB_PASS: ${MONGO_INITDB_ROOT_PASSWORD}
+      _APP_DB_NAME: ${MONGO_DB}
     volumes:
-      - appwrite_data:/storage
-    restart: always
+      - appwrite_storage:/storage
+      - appwrite_cache:/cache
+    restart: unless-stopped
 
 volumes:
-  mongo_data:
-  appwrite_data:
+  appwrite_storage:
+  appwrite_cache:
