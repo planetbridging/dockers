@@ -19,11 +19,9 @@ services:
     image: parseplatform/parse-dashboard:latest
     container_name: parse-dashboard
     environment:
-      - PARSE_DASHBOARD_APPLICATION_ID=${PARSE_SERVER_APPLICATION_ID}
-      - PARSE_DASHBOARD_MASTER_KEY=${PARSE_SERVER_MASTER_KEY}
-      - PARSE_DASHBOARD_SERVER_URL=http://parse-server:1337/parse
-      - PARSE_DASHBOARD_USER_ID=${PARSE_DASHBOARD_USER_ID}
-      - PARSE_DASHBOARD_USER_PASSWORD=${PARSE_DASHBOARD_USER_PASSWORD}
+      - PARSE_DASHBOARD_CONFIG=/parse-dashboard-config.json
+    volumes:
+      - ./parse-dashboard-config.json:/parse-dashboard-config.json
     ports:
       - 4040:4040
     restart: unless-stopped
