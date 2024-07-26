@@ -20,7 +20,7 @@ services:
     container_name: parse-dashboard
     command: "--config /parse-dashboard/parse-dashboard-config.json --allowInsecureHTTP"
     volumes:
-      - ./parse-dashboard-config.json:/parse-dashboard-config.json
+      - ./parse-dashboard-config.json:/parse-dashboard/parse-dashboard-config.json
     ports:
       - 4040:4040
     restart: unless-stopped
