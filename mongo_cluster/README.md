@@ -1,7 +1,6 @@
 docker-compose up -d --build
 
 
-
 docker exec -it mongo1 mongosh -u <USERNAME> -p <PASSWORD> --authenticationDatabase admin
 
 
