@@ -18,8 +18,7 @@ services:
   parse-dashboard:
     image: parseplatform/parse-dashboard:latest
     container_name: parse-dashboard
-    environment:
-      - PARSE_DASHBOARD_CONFIG=/parse-dashboard-config.json
+    command: "--config /parse-dashboard/parse-dashboard-config.json --allowInsecureHTTP"
     volumes:
       - ./parse-dashboard-config.json:/parse-dashboard-config.json
     ports:
