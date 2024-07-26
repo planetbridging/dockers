@@ -15,7 +15,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - _APP_DB_HOST=mongo
+      - _APP_DB_HOST=${MONGO_HOST}
       - _APP_DB_PORT=27017
       - _APP_DB_USER=${MONGO_INITDB_ROOT_USERNAME}
       - _APP_DB_PASS=${MONGO_INITDB_ROOT_PASSWORD}
