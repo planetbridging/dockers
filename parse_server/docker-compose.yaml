@@ -14,6 +14,8 @@ services:
     ports:
       - 1337:1337
     restart: unless-stopped
+    networks:
+      - parse-network
 
   parse-dashboard:
     image: parseplatform/parse-dashboard:latest
@@ -24,3 +26,9 @@ services:
     ports:
       - 4040:4040
     restart: unless-stopped
+    networks:
+      - parse-network
+
+networks:
+  parse-network:
+    driver: bridge
