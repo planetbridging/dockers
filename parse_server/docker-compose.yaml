@@ -9,6 +9,7 @@ services:
       - PARSE_SERVER_MASTER_KEY=${PARSE_SERVER_MASTER_KEY}
       - PARSE_SERVER_DATABASE_URI=${PARSE_SERVER_DATABASE_URI}
       - PARSE_SERVER_CLOUD_CODE_MAIN=${PARSE_SERVER_CLOUD_CODE_MAIN}
+      - PARSE_SERVER_MASTER_KEY_IPS=${PARSE_SERVER_MASTER_KEY_IPS}
     volumes:
       - ./parse-server/cloud:/parse-server/cloud
     ports:
