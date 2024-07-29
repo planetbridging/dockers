@@ -76,6 +76,7 @@ services:
     environment:
       - HIVE_SITE_conf_hive_metastore_warehouse_dir=/hive/warehouse
       - HIVE_SITE_conf_hive_metastore_uris=thrift://hive-metastore:9083
+      - HIVE_SITE_conf_fs_defaultFS=hdfs://namenode:9000
       - POSTGRES_DB=metastore
       - POSTGRES_USER=hive
       - POSTGRES_PASSWORD=hive
