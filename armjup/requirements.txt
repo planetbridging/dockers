@@ -1,0 +1,4 @@
+jupyterlab
+notebook
+nbconvert
+ipywidgets
